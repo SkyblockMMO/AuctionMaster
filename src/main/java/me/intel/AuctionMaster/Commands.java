@@ -21,6 +21,7 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 
 import static me.intel.AuctionMaster.AuctionMaster.*;
+import static org.bukkit.Bukkit.getPlayer;
 import static org.bukkit.Bukkit.getServer;
 
 public class Commands implements CommandExecutor {
@@ -29,10 +30,21 @@ public class Commands implements CommandExecutor {
         plugin.getCommand("auction").setExecutor(this);
         plugin.getCommand("ahadmin").setExecutor(this);
         plugin.getCommand("ahview").setExecutor(this);
+        plugin.getCommand("ahnpc").setExecutor(this);
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (cmd.getName().equalsIgnoreCase("ahnpc")){
+            if (!(sender instanceof Player)){
+                Player p = Bukkit.getPlayer(args[0]);
+                if(p.hasPermission("skyblock.auctionhouse")){
+                    new MainAuctionMenu(p);
+                }else {
+                    p.sendMessage("§b§lSky§aMMO §f§l>> §cTarg jest aktualnie wyłączony!");
+                }
+            }
+        }
         if(sender instanceof Player) {
             Player p = (Player) sender;
             if (cmd.getName().equalsIgnoreCase("auction")) {
@@ -100,6 +112,7 @@ public class Commands implements CommandExecutor {
                         p.sendMessage(utilsAPI.chat(p, AuctionMaster.bidsRelatedCfg.getString("too-late-to-open-now")));
                     }
                 }
+
             }
             else if(cmd.getName().equalsIgnoreCase("ahadmin")) {
                 if(!sender.hasPermission(plugin.getConfig().getString("admin-perks-use-permission"))){
@@ -179,8 +192,8 @@ public class Commands implements CommandExecutor {
                     }
                     else if(args[0].equalsIgnoreCase("debugNames")){
                         if(AuctionMaster.auctionNPC!=null) {
-                            AuctionMaster.auctionNPC.debugHolos();
-                            p.sendMessage(Utils.chat("&aDone!"));
+                            //AuctionMaster.auctionNPC.debugHolos();
+                            p.sendMessage(Utils.chat("&aDone! &cCurrently off"));
                         }
                         else
                             p.sendMessage(Utils.chat("&cYou either don't have Citizens Plugin or don't have auction-npc-use set to true in config.yml!"));

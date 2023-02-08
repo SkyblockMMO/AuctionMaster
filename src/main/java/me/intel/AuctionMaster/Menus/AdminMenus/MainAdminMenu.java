@@ -78,8 +78,8 @@ public class MainAdminMenu {
                     }
                     else if(e.getSlot()==14){
                         if(AuctionMaster.auctionNPC!=null) {
-                            AuctionMaster.auctionNPC.debugHolos();
-                            player.sendMessage(Utils.chat("&aDone!"));
+                            //AuctionMaster.auctionNPC.debugHolos();
+                            player.sendMessage(Utils.chat("&aDone! &cCurently off"));
                         }
                         else
                             player.sendMessage(Utils.chat("&cYou either don't have Citizens Plugin or don't have auction-npc-use set to true in config.yml!"));

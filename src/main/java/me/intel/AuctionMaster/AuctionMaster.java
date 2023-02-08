@@ -134,7 +134,7 @@ public class AuctionMaster extends JavaPlugin {
         }
     }
 
-    private void setupAuctionNPC() {
+    /*private void setupAuctionNPC() {
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -146,6 +146,8 @@ public class AuctionMaster extends JavaPlugin {
             }
         }.runTaskLater(this, 100L);
     }
+
+     */
 
     public class DeliveryAlert implements Listener {
         @EventHandler
@@ -236,7 +238,7 @@ public class AuctionMaster extends JavaPlugin {
 
         currencySetup();
         EventSetup();
-        setupAuctionNPC();
+        //setupAuctionNPC();
         customTax();
 
         inputSetup();

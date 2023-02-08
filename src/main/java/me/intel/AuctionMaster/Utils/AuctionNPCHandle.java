@@ -28,14 +28,14 @@ public class AuctionNPCHandle implements Listener {
     private final String line2;
     private final double holoHeight;
 
-    public AuctionNPCHandle(){
+    public AuctionNPCHandle() {
         Bukkit.getPluginManager().registerEvents(this, AuctionMaster.plugin);
-        line1= Utils.chat(AuctionMaster.plugin.getConfig().getString("auction-npc-title.line-1"));
-        line2= AuctionMaster.plugin.getConfig().getString("auction-npc-title.line-2");
-        holoHeight= AuctionMaster.plugin.getConfig().getDouble("auction-npc-title.line-1-height");
+        line1 = Utils.chat(AuctionMaster.plugin.getConfig().getString("auction-npc-title.line-1"));
+        line2 = AuctionMaster.plugin.getConfig().getString("auction-npc-title.line-2");
+        holoHeight = AuctionMaster.plugin.getConfig().getDouble("auction-npc-title.line-1-height");
     }
 
-    public void unloadHolos(){
+    public void unloadHolos() {
         if (holoLocations.isEmpty())
             return;
 
@@ -49,7 +49,7 @@ public class AuctionNPCHandle implements Listener {
 
         holoLocations = new ArrayList<>();
     }
-
+/*
     public void debugHolos() {
         unloadHolos();
 
@@ -74,9 +74,10 @@ public class AuctionNPCHandle implements Listener {
             createHologram(debug);
         }
     }
+    */
 
-    private void createHologram(NPC npc){
-        Location loc=npc.getStoredLocation();
+    private void createHologram(NPC npc) {
+        Location loc = npc.getStoredLocation();
         if (loc == null)
             return;
 
@@ -86,7 +87,7 @@ public class AuctionNPCHandle implements Listener {
 
         loc.add(0, holoHeight, 0);
         loc.setYaw((float) 0.0);
-        ArmorStand am = (ArmorStand)loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
+        ArmorStand am = (ArmorStand) loc.getWorld().spawnEntity(loc, EntityType.ARMOR_STAND);
         am.setMarker(true);
         am.setVisible(false);
         am.setSmall(true);
@@ -98,7 +99,7 @@ public class AuctionNPCHandle implements Listener {
         holoLocations.add(am.getLocation());
     }
 
-    private ArmorStand getHologram(Location loc){
+    private ArmorStand getHologram(Location loc) {
         for (Entity entity : loc.getWorld().getNearbyEntities(loc, 1, 3, 1)) {
             if (entity instanceof ArmorStand)
                 return (ArmorStand) entity;
@@ -106,7 +107,7 @@ public class AuctionNPCHandle implements Listener {
         return null;
     }
 
-    public void createNpc(Player p){
+    public void createNpc(Player p) {
         NPC npc = CitizensAPI.getNPCRegistry().createNPC(EntityType.PLAYER, Utils.chat("&r" + line2));
         npc.setProtected(true);
         npc.spawn(p.getLocation());
@@ -123,26 +124,26 @@ public class AuctionNPCHandle implements Listener {
     }
 
     @EventHandler
-    public void onNpcClick(NPCRightClickEvent event){
+    public void onNpcClick(NPCRightClickEvent event) {
         NPC npc = event.getNPC();
-        if(npc.getName().equals(Utils.chat("&r"+line2))) {
-            if(!AuctionMaster.plugin.getConfig().getString("auction-use-permission").equals("none"))
-                if(!event.getClicker().hasPermission(AuctionMaster.plugin.getConfig().getString("auction-use-permission"))){
+        if (npc.getName().equals(Utils.chat("&r" + line2))) {
+            if (!AuctionMaster.plugin.getConfig().getString("auction-use-permission").equals("none"))
+                if (!event.getClicker().hasPermission(AuctionMaster.plugin.getConfig().getString("auction-use-permission"))) {
                     event.getClicker().sendMessage(Utils.chat(AuctionMaster.plugin.getConfig().getString("auction-no-permission")));
                     return;
                 }
             Utils.playSound(event.getClicker(), "ah-npc-click");
             new MainAuctionMenu(event.getClicker());
-            
+
         }
     }
 
     @EventHandler
-    public void onNpcClick(NPCLeftClickEvent event){
+    public void onNpcClick(NPCLeftClickEvent event) {
         NPC npc = event.getNPC();
-        if(npc.getName().equals(Utils.chat("&r"+line2))) {
-            if(!AuctionMaster.plugin.getConfig().getString("auction-use-permission").equals("none"))
-                if(!event.getClicker().hasPermission(AuctionMaster.plugin.getConfig().getString("auction-use-permission"))){
+        if (npc.getName().equals(Utils.chat("&r" + line2))) {
+            if (!AuctionMaster.plugin.getConfig().getString("auction-use-permission").equals("none"))
+                if (!event.getClicker().hasPermission(AuctionMaster.plugin.getConfig().getString("auction-use-permission"))) {
                     event.getClicker().sendMessage(Utils.chat(AuctionMaster.plugin.getConfig().getString("auction-no-permission")));
                     return;
                 }
@@ -152,11 +153,11 @@ public class AuctionNPCHandle implements Listener {
     }
 
     @EventHandler
-    public void onNpcRemove(NPCRemoveEvent event){
+    public void onNpcRemove(NPCRemoveEvent event) {
         NPC npc = event.getNPC();
-        if(npc.getName().equals(Utils.chat("&r"+line2))) {
+        if (npc.getName().equals(Utils.chat("&r" + line2))) {
             ArmorStand am = getHologram(event.getNPC().getStoredLocation());
-            if(am!=null) {
+            if (am != null) {
                 holoLocations.remove(am.getLocation());
                 am.remove();
             }
@@ -164,14 +165,14 @@ public class AuctionNPCHandle implements Listener {
     }
 
     @EventHandler
-    public void onNpcMove(NPCTeleportEvent event){
+    public void onNpcMove(NPCTeleportEvent event) {
         NPC npc = event.getNPC();
-        if(npc.getName().equals(Utils.chat("&r"+line2))) {
+        if (npc.getName().equals(Utils.chat("&r" + line2))) {
             ArmorStand am = getHologram(event.getFrom());
-            if(am!=null){
+            if (am != null) {
                 Location loc = am.getLocation().clone();
                 holoLocations.remove(loc);
-                loc=event.getTo().clone();
+                loc = event.getTo().clone();
                 loc.add(0, holoHeight, 0);
                 loc.setYaw((float) 0.0);
                 holoLocations.add(loc);

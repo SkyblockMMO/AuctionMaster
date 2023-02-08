@@ -11,6 +11,7 @@ commands:
   auction:
     aliases: [ah, auctions, auctionhouse, ahouse]
     description: Use this command to open the auction menu.
+  ahnpc:
   ahview:
     description: View an auction.
   ahadmin:

@@ -264,7 +264,6 @@ public class AuctionClassic implements Auction{
         AuctionMaster.auctionsHandler.bidAuctions.getOrDefault(uuid, new ArrayList<>()).remove(this);
         if(AuctionMaster.auctionsHandler.bidAuctions.getOrDefault(uuid, new ArrayList<>()).isEmpty())
             AuctionMaster.auctionsHandler.bidAuctions.remove(uuid);
-        System.out.println("DUPA BISKUKA!");
         bids.claimBid(player);
         player.getInventory().addItem(item);
         Bukkit.getPluginManager().callEvent(new TopBidClaim(player, this, item));
