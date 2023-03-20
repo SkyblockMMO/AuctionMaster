@@ -91,7 +91,7 @@ public class CreateAuctionConfirmMenu {
                         status = AuctionMaster.auctionsHandler.createAuction(new AuctionClassic(player, startingBid, duration, AuctionMaster.auctionsHandler.previewItems.get(uuid)));
                     if (!status)
                         return;
-
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "husksynclock " + player.getName());
                     Utils.playSound(player, "auction-confirm");
                     AuctionMaster.economy.removeMoney(player, fee);
                     AuctionMaster.auctionsDatabase.deletePreviewItems(uuid);

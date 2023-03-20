@@ -86,7 +86,7 @@ public class MySQLDatabase implements DatabaseHandler {
             long seconds = section.getInt("refresh.time", 5) * 20L;
             Bukkit.getScheduler().runTaskTimerAsynchronously(AuctionMaster.plugin, () -> {
                 //Bukkit.getLogger().info("Refreshing auctions...");  //DEBUG
-                this.refreshAuctions();
+                this.refreshAuctions();   // TO TA LINIA
                 addAllToBrowse();
                 loadPreviewItems();
             }, seconds, seconds);
@@ -801,6 +801,7 @@ public class MySQLDatabase implements DatabaseHandler {
                 }
 
                 if (!list.isEmpty()) {
+                    //AuctionMaster.auctionsHandler.ownAuctions.clear();
                     AuctionMaster.auctionsHandler.ownAuctions.put(id, list);
                 }
                 list = new ArrayList<>();
@@ -817,6 +818,7 @@ public class MySQLDatabase implements DatabaseHandler {
                 }
 
                 if (!list.isEmpty()) {
+                    //AuctionMaster.auctionsHandler.bidAuctions.clear();
                     AuctionMaster.auctionsHandler.bidAuctions.put(id, list);
                 }
             }

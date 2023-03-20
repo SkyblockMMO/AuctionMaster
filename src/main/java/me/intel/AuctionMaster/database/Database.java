@@ -26,7 +26,7 @@ public class Database {
     public Database setup() {
         hikariConfig.setMaxLifetime(600000); // zeby uniknac wiekszy lifetime hikari niz mysql
         hikariConfig.setConnectionTimeout(30000);
-        hikariConfig.setMaximumPoolSize(30);
+        hikariConfig.setMaximumPoolSize(10);
         hikariConfig.addDataSourceProperty("cachePrepStmts", "true"); //pozwala lepiej wspolpracowac z prepared statements
         hikariConfig.addDataSourceProperty("prepStmtCacheSize", "250");
         hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");

@@ -1,8 +1,7 @@
 package me.intel.AuctionMaster.AuctionObjects;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
+import org.bukkit.entity.Player;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
@@ -74,6 +73,16 @@ public class Bids {
         }
         return toReturn;
     }
+    public boolean isClaimed(Player player){
+        String uuid = player.getUniqueId().toString();
+        for(Bid bid : bids){
+            if(bid.bidderUUID.equals(uuid)){
+                return bid.claimed;
+            }
+        }
+        return false;
+    }
+
 
     public int getNumberOfBids(){
         return !bids.isEmpty() ? bids.size() : 0;

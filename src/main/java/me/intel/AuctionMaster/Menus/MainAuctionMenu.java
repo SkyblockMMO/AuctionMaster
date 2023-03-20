@@ -116,12 +116,15 @@ public class MainAuctionMenu {
                                 AuctionMaster.auctionsHandler.ownAuctions.get(player.getUniqueId().toString()).remove(auction);
                             });
                         }
-                        if (AuctionMaster.auctionsHandler.ownAuctions.get(player.getUniqueId().toString())== null||AuctionMaster.auctionsHandler.ownAuctions.get(player.getUniqueId().toString()).isEmpty()) {
+                        if (AuctionMaster.auctionsHandler.ownAuctions.get(player.getUniqueId().toString()) == null
+                                ||
+                                AuctionMaster.auctionsHandler.ownAuctions.get(player.getUniqueId().toString()).isEmpty()) {
+
                             AuctionMaster.auctionsHandler.ownAuctions.remove(player.getUniqueId().toString());
                         }
                         if (!AuctionMaster.auctionsHandler.ownAuctions.containsKey(player.getUniqueId().toString())) {
                             new CreateAuctionMainMenu(player);
-                        }else{
+                        } else {
                             new ManageOwnAuctionsMenu(player, 1);
                         }
                     } else if (e.getSlot() == AuctionMaster.menusCfg.getInt("main-menu.browsing-menu-slot")) {
@@ -130,23 +133,43 @@ public class MainAuctionMenu {
                     } else if (e.getSlot() == AuctionMaster.menusCfg.getInt("main-menu.view-bids-menu-slot")) {
 
 
+                        //List<Auction> isMoneyClaimed = new ArrayList<>();
 
-                        List<Auction> isMoneyClaimed = new ArrayList<>();
+/*
                         if (AuctionMaster.auctionsHandler.bidAuctions.get(player.getUniqueId().toString()) != null) {
                             AuctionMaster.auctionsHandler.bidAuctions.get(player.getUniqueId().toString()).forEach(auction -> {
-                                if (AuctionMaster.auctionsDatabase.checkDBifBuyerClaimed(auction.getId()) ) {
+
+
+                                if (auction.getBids().isClaimed(player)) { //DEBUG
+                                        System.out.println("Player Claimed: " + auction.getBids().isClaimed(player));
+
+                                    } else {
+                                        System.out.println("Player DIDNT!: " + auction.getBids().isClaimed(player));
+                                    }//END DEBUG
+
+
+                                if (AuctionMaster.auctionsDatabase.checkDBifBuyerClaimed(auction.getId())
+                                        &&
+                                        auction.getBids().isClaimed(player)
+                                        && AuctionMaster.auctionsDatabase.checkDBIsClaimedItem(auction.getId())) {
                                     isMoneyClaimed.add(auction);
-                                    //AuctionMaster.auctionsHandler.ownAuctions.get(player.getUniqueId().toString()).remove(auction);
                                 }
+                                // if (auction.getBids().isClaimed(player)) {
+                                //     isMoneyClaimed.add(auction);
+                                // }
 
                             });
                             isMoneyClaimed.forEach(auction -> {
+
                                 AuctionMaster.auctionsHandler.bidAuctions.get(player.getUniqueId().toString()).remove(auction);
                             });
                         }
-                        if (AuctionMaster.auctionsHandler.bidAuctions.get(player.getUniqueId().toString())== null||AuctionMaster.auctionsHandler.bidAuctions.get(player.getUniqueId().toString()).isEmpty()) {
+
+ */
+                        if (AuctionMaster.auctionsHandler.bidAuctions.get(player.getUniqueId().toString()) == null || AuctionMaster.auctionsHandler.bidAuctions.get(player.getUniqueId().toString()).isEmpty()) {
                             AuctionMaster.auctionsHandler.bidAuctions.remove(player.getUniqueId().toString());
                         }
+
 
                         if (AuctionMaster.auctionsHandler.bidAuctions.containsKey(player.getUniqueId().toString())) {
                             Utils.playSound(player, "view-bids-has-click");

@@ -39,7 +39,6 @@ public class ManageOwnBidsMenu {
                 auction.claimBid(player);
             player.sendMessage(AuctionMaster.utilsAPI.chat(player, AuctionMaster.auctionsManagerCfg.getString("collect-all-message")));
         }
-
         player.closeInventory();
         return true;
     }
@@ -118,7 +117,6 @@ public class ManageOwnBidsMenu {
                     ));
                 inventory.setItem(size - 8, AuctionMaster.itemConstructor.getItem(AuctionMaster.configLoad.collectAllMaterial, AuctionMaster.utilsAPI.chat(player, AuctionMaster.configLoad.collectAllName), lore));
             }
-
             Bukkit.getScheduler().runTask(AuctionMaster.plugin, () -> {
                 Bukkit.getPluginManager().registerEvents(listener, AuctionMaster.plugin);
                 player.openInventory(inventory);

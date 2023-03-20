@@ -68,6 +68,7 @@ public class ManageOwnAuctionsMenu {
         }
 
         player.sendMessage(AuctionMaster.utilsAPI.chat(player, AuctionMaster.auctionsManagerCfg.getString("collect-all-message")));
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "husksynclock " + player.getName());
         player.closeInventory();
         return true;
     }

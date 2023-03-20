@@ -333,7 +333,6 @@ public class ViewAuctionMenu {
                 inventory = null;
                 return;
             }
-
             generateEndOwnAuction();
 
         }
@@ -352,7 +351,6 @@ public class ViewAuctionMenu {
         for (String line : AuctionMaster.configLoad.goBackLore)
             lore.add(AuctionMaster.utilsAPI.chat(player, line));
         inventory.setItem(AuctionMaster.menusCfg.getInt("view-auction-menu.go-back-slot"), AuctionMaster.itemConstructor.getItem(AuctionMaster.configLoad.goBackMaterial, AuctionMaster.utilsAPI.chat(player, AuctionMaster.configLoad.goBackName), lore));
-
         Bukkit.getPluginManager().registerEvents(auction.isBIN() ? new ClickListenBIN() : new ClickListen(), AuctionMaster.plugin);
         player.openInventory(inventory);
         keepUpdated();
@@ -425,6 +423,7 @@ public class ViewAuctionMenu {
                                     if (AuctionMaster.auctionsDatabase.checkDBNameAndifClaimed(auction.getId(), player.getName())) {
                                         AuctionMaster.economy.removeMoney(player, bidAmount);
                                         player.getInventory().addItem(auction.getItemStack());
+                                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "husksynclock " + player.getName());
                                     } else {
                                         player.sendMessage(Utils.chat(AuctionMaster.auctionsManagerCfg.getString("auction-is-not-available")));
                                         player.closeInventory();
@@ -439,6 +438,7 @@ public class ViewAuctionMenu {
                         }
                         else if (clickCase == 2 || clickCase == 1) {
                             auction.sellerClaim(player);
+                            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "husksynclock " + player.getName());
                             goBack();
                         }
 

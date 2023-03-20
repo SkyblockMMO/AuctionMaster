@@ -104,6 +104,7 @@ public class DeliveryPlayerMenu {
                             x.printStackTrace();
                             AuctionMaster.deliveries.removeDelivery(player.getUniqueId().toString());
                         }
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "husksynclock " + player.getName());
                         player.closeInventory();
                     }
                 }
