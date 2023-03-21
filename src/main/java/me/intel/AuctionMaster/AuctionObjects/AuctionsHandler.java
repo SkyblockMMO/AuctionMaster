@@ -11,10 +11,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static me.intel.AuctionMaster.AuctionMaster.buyItNowCfg;
 import static me.intel.AuctionMaster.AuctionMaster.utilsAPI;
@@ -22,7 +20,7 @@ import static me.intel.AuctionMaster.AuctionMaster.utilsAPI;
 public class AuctionsHandler {
     public HashMap<String, ArrayList<Auction>> ownAuctions = new HashMap<>();
     public HashMap<String, ArrayList<Auction>> bidAuctions = new HashMap<>();
-    public HashMap<String, Auction> auctions = new HashMap<>();
+    public Map<String, Auction> auctions = new ConcurrentHashMap<>();
     public HashMap<String, ItemStack> previewItems=new HashMap<>();
     public HashMap<String, Double> startingBid=new HashMap<>();
     public HashMap<String, Integer> startingDuration=new HashMap<>();

@@ -13,6 +13,7 @@ import java.time.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.entity.Player;
@@ -24,9 +25,9 @@ public class MySQLDatabase implements DatabaseHandler {
     private String link;
     private String url;
 
-    private HashMap<String, Auction> newMap = new HashMap<>();
+    private Map<String, Auction> newMap = new ConcurrentHashMap<>();
 
-    public static HashMap<String, Auction> oldMap = new HashMap<>();
+    public static Map<String, Auction> oldMap = new ConcurrentHashMap<>();
     private boolean debug = false;
     private boolean debug2 = false;
 
@@ -733,7 +734,7 @@ public class MySQLDatabase implements DatabaseHandler {
     }
 
 
-    private void refreshAuctions() {
+    private synchronized void refreshAuctions() {
         if (debug){
             System.out.println("(24)");
         }
@@ -744,7 +745,7 @@ public class MySQLDatabase implements DatabaseHandler {
         ) {
             ResultSet set = statement.executeQuery();
 
-            oldMap = (HashMap<String, Auction>) AuctionMaster.auctionsHandler.auctions.clone();
+            oldMap = new ConcurrentHashMap<>(AuctionMaster.auctionsHandler.auctions);
             newMap.clear();
             while (set.next()) {
                 String id = set.getString(1);
@@ -761,7 +762,7 @@ public class MySQLDatabase implements DatabaseHandler {
                 //AuctionMaster.auctionsHandler.auctions.put(id, auction);
             }
             AuctionMaster.auctionsHandler.auctions.clear();
-            newMap.keySet().forEach(s -> AuctionMaster.auctionsHandler.auctions.put(s, newMap.get(s)));
+            newMap.keySet().forEach(s -> AuctionMaster.auctionsHandler.auctions.put(s, newMap.get(s))); //HERE
 
 
         } catch (Exception e) {
